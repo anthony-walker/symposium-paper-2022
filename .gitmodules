@@ -1,0 +1,3 @@
+[submodule "latex-macros"]
+	path = latex-macros
+	url = git@github.com:anthony-walker/latex-macros.git
