@@ -1,0 +1,252 @@
+%% This program can be redistributed and/or modified under the terms
+%% of the LaTeX Project Public License Distributed from CTAN archives
+%% in directory macros/latex/base/lppl.txt.
+%
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{math}
+  [2021/01/11 v0.01 LaTeX package for frequent math commands used in my thesis.]
+\RequirePackage{amssymb, amsfonts, amsmath, tikz, minted, hyperref}
+\usepackage[version=4]{mhchem}
+\usetikzlibrary{shapes.geometric, arrows}
+% Example declare option
+% %% 'sans serif' option
+% \DeclareOption{sans}{
+%   \renewcommand{\familydefault}{\sfdefault}
+% }
+
+
+
+%************************************************************%
+%********************** Macro Definitions ********************%
+%************************************************************%
+
+% For units
+\RequirePackage{siunitx}
+\def\cantera{\texttt{Cantera}}
+\def\sundials{\texttt{Sundials}}
+\def\cvodes{\texttt{CVODES}}
+\def\gmres{\texttt{GMRES}}
+\def\spgmr{\texttt{SPGMR}}
+\def\psolve{\texttt{PSolve}}
+\def\eigen{\texttt{Eigen}}
+\def\S{\mathcal{S}}
+\def\C{\mathcal{C}}
+\def\AP{\mathcal{P}}
+\def\nspecies{\Psi}
+\def\nreactions{\Phi}
+\def\prodSpecies{\beta}
+\def\reactSpecies{\alpha}
+\def\manualcheck{\quad\checkmark{}}
+\newcommand{\MW}[1][]{\mathrm{M\!W}_{#1}}
+\newcommand{\F}[1]{\mathcal{F}(#1)}
+\newcommand{\N}[2][]{\mathcal{N}^{#1}(#2)}
+\newcommand{\J}[2][]{\mathcal{J}^{#1}(#2)}
+\newcommand{\K}[2][]{\mathcal{K}^{#1}(#2)}
+\newcommand{\R}[2][]{\mathcal{R}^{#1}(#2)}
+\newcommand{\MP}[2][]{\mathcal{P}^{#1}(#2)}
+\newcommand{\B}[2][]{\mathcal{B}^{#1}(#2)}
+\DeclareSIUnit\concentration{\kilo\mole\per\meter\cubed}
+\DeclareSIUnit\ratelaw{\kilo\mole\per\meter\cubed\per\second}
+\DeclareSIUnit\mass{\kilo\gram}
+\DeclareSIUnit\temperature{\kelvin}
+
+
+\numberwithin{equation}{section}
+\renewcommand\theequation{\thesection.\arabic{equation}}
+\def \bmh{5pt} %bmatrix height
+\def \bmw{5pt} %bmatrix width
+
+\newcommand{\SpecSum}[1]
+{
+    \sum_{k=1}^{\nspecies}{#1}
+}
+
+\newcommand{\ReacSum}[1]
+{
+    \sum_{k=1}^{\nreactions}{#1}
+}
+
+\newcommand{\SpecProd}[1]
+{
+    \prod_{\substack{h = 1 \\ h \neq j}}^{\nspecies}{#1}
+}
+
+\newcommand{\ReactSpecProd}[1]
+{
+    \prod_{\substack{h = 1 \\ h \neq j}}^{\reactSpecies}{#1}
+}
+
+\newcommand{\ProdSpecProd}[1]
+{
+    \prod_{\substack{h = 1 \\ h \neq j}}^{\prodSpecies}{#1}
+}
+
+
+\newcommand{\reaction}[2]
+{
+    \begin{equation}
+        \label{#2}
+        \ce{#1}
+    \end{equation}
+}
+
+\newcommand{\pderv}[2]
+{
+    \frac{\partial #1}{\partial #2}
+}
+
+\newcommand{\onestepline}[1]
+{
+    \pderv{#1}{\dot{m}} & \pderv{#1}{T} & \pderv{#1}{\conc{\ce{O2}}} &
+    \pderv{#1}{\conc{\ce{H2O}}} & \pderv{#1}{\conc{\ce{CH4}}} &
+    \pderv{#1}{\conc{\ce{CO2}}}\\[\bmh]
+}
+
+\newcommand{\onestepsimp}[1]
+{
+    0 & \pderv{#1}{T} & \pderv{#1}{\conc{\ce{O2}}} & 0 & \pderv{#1}{\conc{\ce{CH4}}} & 0\\
+}
+
+\newcommand{\homega}[1]
+{
+    (\bar{h}\dot{\omega})_{\ce{#1}}
+}
+
+\newcommand{\conccp}[1]
+{
+    (c_{p,\ce{#1}}\conc{#1})
+}
+
+\newcommand{\conc}[1]
+{
+    [\ce{#1}]
+}
+
+\newcommand{\hwderv}[2]
+{
+    (\bar{h}\dot{\omega})^{\conc{\ce{#2}}}_{{\ce{#1}}}
+}
+
+\newcommand{\twostepline}[1]
+{
+    \pderv{#1}{\dot{m}} & \pderv{#1}{T} & \pderv{#1}{\conc{\ce{O2}}} &
+    \pderv{#1}{\conc{\ce{H2O}}} & \pderv{#1}{\conc{\ce{CH4}}} &
+    \pderv{#1}{\conc{\ce{CO2}}} & \pderv{#1}{\conc{\ce{CO}}}\\[\bmh]
+}
+
+\newcommand{\twostepsimp}[1]
+{
+    0 & \pderv{#1}{T} & \pderv{#1}{\conc{\ce{O2}}} & 0 & \pderv{#1}{\conc{\ce{CH4}}} & \pderv{#1}{\conc{\ce{CO2}}} & \pderv{#1}{\conc{\ce{CO}}}\\[\bmh]
+}
+
+\newcommand{\jacline}[1]
+{
+    \pderv{#1}{T} & \pderv{#1}{n_1} &
+    \cdots & \pderv{#1}{n_\nspecies}\\[\bmh]
+}
+
+\newcommand{\dotsline}
+{
+    \vdots & \vdots &
+    \ddots & \vdots\\[\bmh]
+}
+
+%************************************************************%
+%************* Tikz Pictures Definitions ********************%
+%************************************************************%
+%Style of flow chart
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{generalnode} = [rectangle, minimum width=3cm, minimum height=0.5cm, text centered, draw=black]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{pentagon} = [regular polygon,regular polygon sides=5]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{plain} = [draw=none, fill=none]
+\tikzstyle{edge} = [thick]
+
+\def \lenscale {1cm}
+
+\newcommand{\xfactor}{1*\lenscale}
+
+\newcommand{\yfactor}{1.375*\lenscale}
+
+\newcommand{\defLen}[1]{\def \lenscale {#1*1cm}}
+
+\newcommand{\flowcode}[2][cpp]
+{
+    \mintinline{#1}{#2}
+}
+
+\newcommand{\PreconSetup}[1][1]
+{
+    \defLen{#1}
+    \begin{tikzpicture}[node distance=2.5cm]
+        % Diagram one
+        \node (start) [io] {\flowcode{("GMRES",1)}};
+        \node (pro1) [process, xshift=10*\xfactor] {\flowcode{ReactorNetwork::setIntegratorType}};
+        \node (stop) [startstop, below of=pro1] {\flowcode{ReactorNetwork::m_preconditioner}};
+        \draw [arrow] (start) -- (pro1);
+        \draw [arrow] (pro1) -- (stop);
+    \end{tikzpicture}
+}
+
+\newcommand{\PreconOverview}[1][1]
+{
+    \defLen{#1}
+    \begin{tikzpicture}[node distance=2.5cm]
+        % Diagram two
+        \node (start2) [startstop] {\flowcode{ReactorNetwork::step()}};
+        \node (dec1) [decision,xshift=5*\xfactor] {\flowcode{prec?}};
+        \node (dec2) [decision,xshift=9*\xfactor] {\flowcode{(!jok)}};
+        \node (psetup) [process,right of=dec2,xshift=3*\xfactor] {\flowcode{PSetup}};
+        \node (psolve) [process,below of=psetup,yshift=-2*\yfactor] {\flowcode{PSolve}};
+        \node (cvodes) [process,left of=psolve,xshift=-5*\xfactor] {\flowcode{CVODES}};
+        \node (stop) [startstop, left of=cvodes,xshift=-4.5*\xfactor] {\flowcode{Step result}};
+
+        \draw [arrow] (start2) --  (dec1);
+        \draw [arrow] (dec1) -- node [above] {True} (dec2);
+        \draw [arrow] (dec2) [out=0, in=180] to node [above] {True} (psetup);
+        \draw [arrow] (psetup) -- (psolve);
+        \draw [arrow] (dec2)  [out=270, in=90] to node [above] {False}  (psolve);
+        \draw [arrow] (dec1)  [out=270, in=90] to node [right,xshift=0.25*\xfactor] {False} (cvodes);
+        \draw [arrow] (psolve)  [out=180, in=0] to (cvodes);
+        \draw [arrow] (cvodes) -- (stop);
+        \draw [arrow] (stop) -- (start2);
+    \end{tikzpicture}
+}
+
+\newcommand{\IntegrationOverview}[1][1]
+{
+    \begin{tikzpicture}
+        % Diagram two
+        \node (integ) [generalnode, thick, scale=#1, xshift=-2.5cm] {New Time Step};
+        \node (precon) [generalnode, thick, scale=#1, xshift=2.5cm] {Preconditioner Setup};
+        \node (newton) [generalnode, thick, scale=#1, yshift=-2cm, xshift=2.5cm] {Newton Iteration};
+        % \node (pdecision) [generalnode, thick, scale=#1, yshift=-2cm, xshift=-2.5cm] {Setup Again?};
+        % \node (pyes) [plain, scale=#1, yshift=-2cm] {Yes};
+        \node (nconverged) [generalnode, thick, scale=#1, yshift=-2cm, xshift=-2.5cm] {Converged?};
+        \node (ncno) [plain, scale=#1, yshift=-2cm] {No};
+        \node (ncyes) [plain, scale=#1, yshift=-1cm, xshift=-2.5cm] {Yes};
+        \node (pgmres) [generalnode, thick, scale=#1, yshift=-3cm] {Preconditioned GMRES};
+        \node (converged) [generalnode, thick, scale=#1, yshift=-4cm] {Converged?};
+        \node (cno) [plain, scale=#1, yshift=-3.5cm, xshift=2.5cm] {No};
+        \node (cyes) [plain, scale=#1, yshift=-3.5cm, xshift=-2.5cm] {Yes};
+
+        \draw [arrow, thick, scale=#1] (integ) [out=0, in=180] to (precon);
+        \draw [arrow, thick, scale=#1] (precon) [out=270, in=90] to (newton);
+        \draw [arrow, thick, scale=#1] (newton) [out=270, in=0] to (pgmres);
+        \draw [arrow, thick, scale=#1] (pgmres) [out=270, in=90] to (converged);
+        \draw [edge, thick, scale=#1] (converged) [out=0, in=270] to (cno);
+        \draw [arrow, thick, scale=#1] (cno) [out=90, in=0] to (pgmres);
+        \draw [edge, thick, scale=#1] (converged) [out=180, in=270] to (cyes);
+        \draw [arrow, thick, scale=#1] (cyes) [out=90, in=270] to (nconverged);
+        \draw [edge, thick, scale=#1] (nconverged) [out=90, in=270] to (ncyes);
+        \draw [arrow, thick, scale=#1] (ncyes) [out=90, in=270] to (integ);
+        \draw [edge, thick, scale=#1] (nconverged) [out=0, in=180] to (ncno);
+        \draw [arrow, thick, scale=#1] (ncno) [out=0, in=180] to (newton);
+        % \draw [edge, thick, scale=#1] (pdecision) [out=0, in=90] to (ncno);
+        % \draw [edge, thick, scale=#1] (pdecision) [out=0, in=180] to (pyes);
+        % \draw [arrow, thick, scale=#1] (pyes) [out=0, in=180] to (precon);
+    \end{tikzpicture}
+}
