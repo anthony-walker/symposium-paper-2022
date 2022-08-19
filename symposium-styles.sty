@@ -3,7 +3,7 @@
 %% in directory macros/latex/base/lppl.txt.
 %
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{math}
+\ProvidesPackage{symposium-styles}
   [2021/01/11 v0.01 LaTeX package for frequent math commands used in my thesis.]
 \RequirePackage{amssymb, amsfonts, amsmath, tikz, minted, hyperref}
 \usepackage[version=4]{mhchem}
@@ -59,6 +59,11 @@
 \newcommand{\SpecSum}[1]
 {
     \sum_{k=1}^{\nspecies}{#1}
+}
+
+\newcommand{\cpt}[2]
+{
+    a_{#1}T^{#2}
 }
 
 \newcommand{\ReacSum}[1]
