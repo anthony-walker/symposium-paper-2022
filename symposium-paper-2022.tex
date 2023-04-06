@@ -1,9 +1,7 @@
 % -------------------------------------------------------------------- %
 % -------------------------------------------------------------------- %
 % -------------------------------------------------------------------- %
-%\documentclass[10pt]{elsarticle} % here we use the article class, %rather than elsarticle
-
-\documentclass[twocolumn,10pt]{article}
+\documentclass[preprint, 12pt]{elsarticle}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -18,7 +16,7 @@
 % -------------------------------------------------------------------- %
 % -------------------------------------------------------------------- %
 
-\usepackage[square,numbers,sort&compress,comma]{natbib}
+\usepackage{natbib}
 
 \sisetup{group-separator={,},
      detect-all,
@@ -64,16 +62,6 @@
 % -------------------------------------------------------------------- %
 
 \def\thepage{}
-
-\renewenvironment{abstract}%
-              {% - begin definition
-               \small% - select font
-               {\bfseries \abstractname}% - select font
-               \par% - end a paragraph (skip \parsep)
-               \vspace{10pt}% - add vertical space
-              }% - complete definition
-
-\renewcommand\abstractname{Abstract}
 
 \newcommand{\nomenclature}% - name of command
               [1]% - number of arguments
@@ -186,44 +174,48 @@
 
 \begin{document}
 
-\title{\LARGE Generalized preconditioning for accelerating simulations with large kinetic models}
+\begin{frontmatter}
 
-\author{{\large Anthony S.~Walker$^{a}$, Raymond L.~Speth$^{b}$, and Kyle E.~Niemeyer$^{a}$}\\[10pt]
-        {\footnotesize \em $^a$School of Mechanical, Industrial, and Manufacturing Engineering, Oregon State University, Corvallis, Oregon, United States}\\
-        {\footnotesize \em $^b$Department of Aeronautics and Astronautics, Massachusetts Institute of Technology, Cambridge, Massachusetts, United States}\\[-5pt]}
-\date{}
+    \title{\LARGE Generalized preconditioning for accelerating simulations with large kinetic models}
 
-% -------------------------------------------------------------------- %
-% -------------------------------------------------------------------- %
-% -------------------------------------------------------------------- %
+    % \author{{\large Anthony S.~Walker$^{a}$, Raymond L.~Speth$^{b}$, and Kyle E.~Niemeyer$^{a}$}\\[10pt]
+    %         {\footnotesize \em $^a$, Oregon State University, Corvallis, Oregon, United States}\\
+    %         {\footnotesize \em $^b$, Cambridge, Massachusetts, United States}\\[-5pt]}
 
-\small
-\baselineskip 10pt
+    \author[inst1]{Anthony S.  Walker}
+    \author[inst2]{Raymond L. Speth}
+    \author[inst1]{Kyle E. Niemeyer}
 
-% -------------------------------------------------------------------- %
-% -------------------------------------------------------------------- %
-% -------------------------------------------------------------------- %
+    \affiliation[inst1]{
+                organization={Oregon State University, School of Mechanical, Industrial, and Manufacturing Engineering},
+                city={Corvallis},
+                state={Oregon},
+                }
+    \affiliation[inst2]{
+                organization={Massachusetts Institute of Technology, Department of Aeronautics and Astronautics},
+                city={Cambridge},
+                state={Massachusetts}
+                }
 
-\twocolumn[\begin{@twocolumnfalse}
-\vspace{50pt}
-\maketitle
-\vspace{40pt}
-\rule{\textwidth}{0.5pt}
-\begin{abstract} % 100 to 300 words.
-%
-Detailed modeling of the combustion of real transportation fuels and the atmospheric reactions involving their emissions is prohibitively expensive, due to the large size and stiffness of the kinetic models.
-Adaptive preconditioning is a method used to reduce the cost of integrating large kinetic models by forming a preconditioner based on an semi-analytical Jacobian matrix, paired with sparse linear algebra procedures.
-In this study, we extend this preconditioning method to a more-general mole-based state vector formulation applicable to generic reactor types and combinations.
-We tested the scheme using constant-pressure and constant-volume ideal-gas reactor simulations, showing speedup in performance from a factor of 3 up to nearly 4000 times for chemical kinetic models with 55 to 7171 species, in comparison with typical dense solvers.
-The method also improves performance by a factor of 1.06 to 21.1, for models larger than 200 species, in comparison with a fully exact, analytical Jacobian used as the preconditioner.
-Overall, this method improves performance by up to three orders of magnitude for large kinetic models, and offers benefits for models with more than 100 species.
-\end{abstract}
-\vspace{10pt}
-\parbox{1.0\textwidth}{\footnotesize {\em Keywords:}
-Chemical kinetics; Implicit integrators; Sparse matrix; Preconditioner; Ordinary diﬀerential equations}
-\rule{\textwidth}{0.5pt}
-\vspace{10pt}
-\end{@twocolumnfalse}]
+    \begin{abstract}
+        Detailed modeling of the combustion of real transportation fuels and the atmospheric reactions involving their emissions is prohibitively expensive, due to the large size and stiffness of the kinetic models.
+        Adaptive preconditioning is a method used to reduce the cost of integrating large kinetic models by forming a preconditioner based on an semi-analytical Jacobian matrix, paired with sparse linear algebra procedures.
+        In this study, we extend this preconditioning method to a more-general mole-based state vector formulation applicable to generic reactor types and combinations.
+        We tested the scheme using constant-pressure and constant-volume ideal-gas reactor simulations, showing speedup in performance from a factor of 3 up to nearly 4000 times for chemical kinetic models with 55 to 7171 species, in comparison with typical dense solvers.
+        The method also improves performance by a factor of 1.06 to 21.1, for models larger than 200 species, in comparison with a fully exact, analytical Jacobian used as the preconditioner.
+        Overall, this method improves performance by up to three orders of magnitude for large kinetic models, and offers benefits for models with more than 100 species.
+    \end{abstract}
+
+    \begin{keyword}
+    %% keywords here, in the form: keyword \sep keyword
+    Chemical kinetics \sep Implicit integrators \sep Sparse matrix \sep Preconditioner \sep Ordinary diﬀerential equations
+    \end{keyword}
+
+    \end{frontmatter}
+
+    % This is for usage in a larger document and does not impact this document when
+    % compiled alone
+    \chapter{Extending generalized preconditioning to accelerate simulations of coupled reactor and surface systems}
 
 % -------------------------------------------------------------------- %
 % -------------------------------------------------------------------- %
