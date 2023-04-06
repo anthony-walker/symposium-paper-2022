@@ -209,8 +209,8 @@
 Detailed modeling of the combustion of real transportation fuels and the atmospheric reactions involving their emissions is prohibitively expensive, due to the large size and stiffness of the kinetic models.
 Adaptive preconditioning is a method used to reduce the cost of integrating large kinetic models by forming a preconditioner based on an semi-analytical Jacobian matrix, paired with sparse linear algebra procedures.
 In this study, we extend this preconditioning method to a more-general mole-based state vector formulation applicable to generic reactor types and combinations.
-\revised{We tested the scheme using constant-pressure and constant-volume ideal-gas reactor simulations, showing speedup in performance from a factor of 3 up to nearly 4000 times for chemical kinetic models with 55 to 7171 species, in comparison with typical dense solvers.
-The method also improves performance by a factor of 1.06 to 21.1, for models larger than 200 species, in comparison with a fully exact, analytical Jacobian used as the preconditioner.}{revOne}
+We tested the scheme using constant-pressure and constant-volume ideal-gas reactor simulations, showing speedup in performance from a factor of 3 up to nearly 4000 times for chemical kinetic models with 55 to 7171 species, in comparison with typical dense solvers.
+The method also improves performance by a factor of 1.06 to 21.1, for models larger than 200 species, in comparison with a fully exact, analytical Jacobian used as the preconditioner.
 Overall, this method improves performance by up to three orders of magnitude for large kinetic models, and offers benefits for models with more than 100 species.
 \end{abstract}
 \vspace{10pt}
@@ -233,15 +233,15 @@ Chemical kinetics; Implicit integrators; Sparse matrix; Preconditioner; Ordinary
 Combustion remains the driving force behind transportation, critical to the world economy and supply chain.
 While a necessity, transportation accounts for substantial amounts of greenhouse gas and pollutant emissions that adversely affect the environment and public health~\cite{van_fan_review_2018, manisalidis_environmental_2020}.
 Beyond carbon dioxide, the emissions produced consist of many additional chemical species, including pollutants such as carbon monoxide, volatile organic compounds, sulphur oxides, and nitrogen oxides~\cite{van_fan_review_2018}.
-Detailed modeling of the combustion of real transportation fuels and the secondary atmospheric reactions involving their emissions is \revised{computationally}{revThree} expensive, due to the large sizes of the kinetic models.
+Detailed modeling of the combustion of real transportation fuels and the secondary atmospheric reactions involving their emissions is computationally expensive, due to the large sizes of the kinetic models.
 For example, with large kinetic models of secondary organic aerosols containing in excess of 5000 species \cite{li_modeling_2015}.
-However, simulating and then mitigating the impact of these emissions requires the ability to model such complex phenomena \revised{with great detail over a wide range of length and time scales.}{revThree}
+However, simulating and then mitigating the impact of these emissions requires the ability to model such complex phenomena with great detail over a wide range of length and time scales.
 
 % Paragraph about needed research
 Most approaches to including detailed chemistry in large-scale reacting-flow simulations currently use methods that either reduce the size of the model, via skeletal reduction or lumping, or eliminate short timescales to reduce stiffness~\cite{Lu2009, Pepiot2019}.
 However, even when combined, these methods may not be sufficient to tackle the extremely large (and ever-growing) size of detailed kinetic models for real-fuel combustion and aerosol formation.
 Thus, accommodating large kinetic models in simulations also requires improvements in integration methods.
-The ordinary differential equations (ODEs) for chemical kinetics are numerically stiff and require implicit integration schemes, which can be particularly expensive for large models because they \revised{typically}{revThree} require factorizing large matrices.
+The ordinary differential equations (ODEs) for chemical kinetics are numerically stiff and require implicit integration schemes, which can be particularly expensive for large models because they typically require factorizing large matrices.
 Direct solutions of large linear systems are prohibitively expensive and limit large-scale simulations with operations that scale cubically with number of species in the kinetic model.
 
 % Paragraph about our study
@@ -305,12 +305,12 @@ The mole-based conservation of energy equation is
     \frac{dT}{dt} = \frac{-\SpecSum{\bar{h}_k\dot{\omega}_k}}{\SpecSum{\conc{n_k} \hat{c}_{p,k}}} = \frac{-\SpecSum{\bar{h}_k\dot{n}_k}}{ \SpecSum{n_k \hat{c}_{p,k}}}\;,
 \end{equation}
 where $\hat{c}_{p,k}$ and $\bar{h}_k$ are the molar constant-pressure specific heat and enthalpy of species $n_k$, respectively.
-\revised{The volume of the state fluctuates but it is not necessary that we solve an equation for $\dot{V}$. Instead, we calculate the volume needed to maintain constant-pressure with the ideal gas law:
+The volume of the state fluctuates but it is not necessary that we solve an equation for $\dot{V}$. Instead, we calculate the volume needed to maintain constant-pressure with the ideal gas law:
 \begin{equation}
     \label{eq:ideal_gas_law}
     V = \frac{NRT}{P} \;.
 \end{equation}
-}{editor}
+
 
 \begin{figure}[htb]
     \centering
@@ -327,10 +327,10 @@ In some cases, the preconditioner is reformed during the nonlinear iterations as
 \label{sec:methods-adaptive}
 
 The adaptive preconditioning method originally applied to constant-volume systems
-by McNenly et al.~\cite{mcnenly_faster_2015} uses a mass-fraction-based approximate Jacobian matrix, which results in a fully dense system for constant-pressure applications. 
-\revised{While a state vector of the form $(T, Y_i)$ is common, a mole-based system $(T, V, n_i)$ has the advantage of enabling a sparse Jacobian, but with the disadvantage being that the system now contains extensive properties \cite{schwer_upgrading_2002}. 
+by McNenly et al.~\cite{mcnenly_faster_2015} uses a mass-fraction-based approximate Jacobian matrix, which results in a fully dense system for constant-pressure applications.
+While a state vector of the form $(T, Y_i)$ is common, a mole-based system $(T, V, n_i)$ has the advantage of enabling a sparse Jacobian, but with the disadvantage being that the system now contains extensive properties \cite{schwer_upgrading_2002}.
 As previously mentioned, for ideal gas constant-pressure systems, we can use the ideal gas law to determine the volume necessary to maintain constant pressure, so it is not necessary to directly integrate an equation for volume.
-Accordingly, to generalize adaptive preconditioning,}{editor} we use a mole-based state vector and Jacobian matrix, $\J{\S{}}$, to develop the preconditioner, $\AP$.
+Accordingly, to generalize adaptive preconditioning, we use a mole-based state vector and Jacobian matrix, $\J{\S{}}$, to develop the preconditioner, $\AP$.
 This approximate Jacobian is developed by eliminating elements below a certain threshold, computing finite difference temperature derivatives, and neglecting third-body efficiency and pressure dependence in the analytical derivatives $\frac{\partial \dot{n}_i}{\partial n_j}$.
 
 
@@ -390,11 +390,11 @@ We continue to break down the rate of progress derivatives into reactant and pro
     -k_{r,k}v_{k,j}^{\prime\prime}\conc{n_j}^{v_{k,j}^{\prime\prime}-1}\ProdSpecProd{\conc{n_h}^{v_{k,h}^{\prime\prime}}} \;,
 \end{multline}
 where $k$ is the reaction rate and $\alpha$ and $\beta$ represent reactant and product species for the reaction.
-To determine $\frac{\partial V}{\partial n_j} \omega_i$, we start with the ideal gas law, \revised{Eq.~\eqref{eq:ideal_gas_law}, and obtain}{editor}
+To determine $\frac{\partial V}{\partial n_j} \omega_i$, we start with the ideal gas law, Eq.~\eqref{eq:ideal_gas_law}, and obtain
 %\former{the form
 %\begin{equation*}
 %    V = \frac{NRT}{P} \;.
-%\end{equation*} }{editor}
+%\end{equation*}
 %We use this relation to obtain
 \begin{equation}
     \frac{\partial V}{\partial n_j} = \frac{\partial V}{\partial N}\frac{\partial N}{\partial n_j} = \frac{RT}{P} = \frac{V}{N} \;.
@@ -565,7 +565,7 @@ We applied the preconditioned \gmres{} method in \cvodes{} by a user-defined fun
 \begin{equation}
     \AP{}z = r \;,
 \end{equation}
-where $r$ in this case is equivalent to $b-Ax$. \revised{When starting the linear solve of this system, \cvodes{} uses a zero vector as the initial guess for $x$.}{revOne}
+where $r$ in this case is equivalent to $b-Ax$. When starting the linear solve of this system, \cvodes{} uses a zero vector as the initial guess for $x$.
 The result is the preconditioned residual in the output vector $z$:
 \begin{equation}
     z =\AP{}^{-1}(b-Ax) \;.
@@ -577,7 +577,7 @@ Applying the \cvodes{} method to our system, we obtained
     z &= \MP{\S^{k}}^{-1}\big[\R{\S{}^{k}}-\K{\S{}^{k}}\S{}^{k+1}\big] \nonumber \\
     &= \MP{\S^{k}}^{-1}\B{\S{}^{k}} \;,
 \end{align}
-where the preconditioner is formed with adaptive preconditioning described in \revised{Section~2.1}{editor}. 
+where the preconditioner is formed with adaptive preconditioning described in Section~2.1.
 
 \sectionTwo{Summary of method}
 
@@ -588,9 +588,9 @@ We implemented these methods within \cantera{} and take advantage of \sundials{}
 
 \sectionOne{Results \& discussion}
 
-We implemented adaptive preconditioning in \cantera{}~\cite{cantera} to integrate \revised{constant-pressure and constant-volume}{revOne} ideal-gas reactor systems.
+We implemented adaptive preconditioning in \cantera{}~\cite{cantera} to integrate constant-pressure and constant-volume ideal-gas reactor systems.
 We selected a set of 14 chemical kinetic models, spanning a range of species numbers from 10 to 7171, listed in Table~\ref{t1:mechanisms}.
-\revised{In these systems, we provided a stoichiometric fuel/air mixture at varying initial temperatures of \SIrange{700}{1600}{\kelvin} and pressures of \SIrange{1}{2}{\atm}.}{generalColor}
+In these systems, we provided a stoichiometric fuel/air mixture at varying initial temperatures of \SIrange{700}{1600}{\kelvin} and pressures of \SIrange{1}{2}{\atm}.
 We selected these initial conditions to produce an ignition event and integrated to a time of \SI{1}{\second}.
 We integrated this problem with a range of preconditioner thresholds from $10^{-18}$ to $10^{-1}$, as well as 0 (i.e., no threshold).
 We ran each test case 100 times and used average values to help account for any unknown variability in timing the runs.
@@ -599,7 +599,7 @@ These test cases were executed using the Oregon State University College of Engi
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.49\textwidth]{figures/Clocktime-Nspecies-pressure_problem.pdf}
-\caption{Clock time as a function of the number of species for preconditioned and non-preconditioned \revised{ideal gas constant-pressure systems}{revOne}.
+\caption{Clock time as a function of the number of species for preconditioned and non-preconditioned ideal gas constant-pressure systems.
 The lines indicate linear and quadratic increases in time.}
 \label{f:clocktime-nspecies-pressure}
 \end{figure}
@@ -607,32 +607,32 @@ The lines indicate linear and quadratic increases in time.}
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.49\textwidth]{figures/Clocktime-Nspecies-volume_problem.pdf}
-\caption{Clock time as a function of the number of species for preconditioned and non-preconditioned \revised{ideal gas constant-volume systems}{revOne}.
+\caption{Clock time as a function of the number of species for preconditioned and non-preconditioned ideal gas constant-volume systems.
 The lines indicate linear and quadratic increases in time.}
 \label{f:clocktime-nspecies-volume}
 \end{figure}
 
-\revised{Figures~\ref{f:clocktime-nspecies-pressure} and~\ref{f:clocktime-nspecies-volume} show the best-case wall-clock times of ignition simulations as a function of the number of species for constant-pressure and constant-volume reactors, respectively.
-The preconditioned solver improves performance over direct solvers in clock time for all models, in both systems, in the best case (i.e., using the threshold value that leads to best performance). 
-For the largest models, we obtained speed-up of several orders of magnitude, and see the most benefit as the number of species increases. 
+Figures~\ref{f:clocktime-nspecies-pressure} and~\ref{f:clocktime-nspecies-volume} show the best-case wall-clock times of ignition simulations as a function of the number of species for constant-pressure and constant-volume reactors, respectively.
+The preconditioned solver improves performance over direct solvers in clock time for all models, in both systems, in the best case (i.e., using the threshold value that leads to best performance).
+For the largest models, we obtained speed-up of several orders of magnitude, and see the most benefit as the number of species increases.
 The maximum speedups for both cases occur for the largest model considered, for 2-methyl-nonadecane model (with 7171 species)~\cite{sarathy_comprehensive_2011}, at factors of 2590 and 3978 for the constant-pressure and -volume cases, respectively.
 In the worst cases, without using the proper threshold, the preconditioned solver reduces performance, by a factor of 0.78 with the hydrogen model~\cite{smith_gri-mech_1999} for constant pressure and 0.45 for the 2-butonane model~\cite{hemken_2017} for constant volume.
 %Specifically, for the constant-pressure system, the maximum speed-up is 2590 for the 2-methyl-nonadecane model with 7171 species~\cite{sarathy_comprehensive_2011}, and the minimum speed-up is 0.78 with the hydrogen~\cite{smith_gri-mech_1999} model at 10 species over all thresholds. At best, the constant-volume problem shows a speed-up of 3978 for 2-methyl-nonadecane~\cite{sarathy_comprehensive_2011} and a worst case of 0.45 for the 2-Butonane~\cite{hemken_2017} model with 315 species over all thresholds.
-}{revOne} 
 
-\revised{The adaptive preconditioned solver also improves performance over a fully analytical preconditioned solver, up to a factor 13 for the 2-nethyl-nonadecane model~\cite{sarathy_comprehensive_2011}, and at worst by a factor of 0.05 for the 2-butonane model~\cite{hemken_2017} for the constant-volume problem. 
+
+The adaptive preconditioned solver also improves performance over a fully analytical preconditioned solver, up to a factor 13 for the 2-nethyl-nonadecane model~\cite{sarathy_comprehensive_2011}, and at worst by a factor of 0.05 for the 2-butonane model~\cite{hemken_2017} for the constant-volume problem.
 For the constant-pressure problem, at best the adaptive preconditioning speeds up integration by a factor of 21 for the isooctane model~\cite{mehl_chemical_2009} and at worst by 0.24 for the methyl-5-decenoate model~\cite{herbinet_detailed_2010}.
-Overall, the adaptive preconditioning offers significant improvement in performance for larger models, with a slight reduction in performance (at most just about half) for the smallest models.}{revOne} 
+Overall, the adaptive preconditioning offers significant improvement in performance for larger models, with a slight reduction in performance (at most just about half) for the smallest models.
 
-\revised{The main factor behind the observed factors of speed-up appears to be the number of species in the model, with more acceleration for larger models.
-However, the performance trends fluctuate based on model: for example, the DME-propane model at 122 species has average speed-ups of 13.5 and 6.55 for the constant-pressure and constant-volume problems, respectively. 
+The main factor behind the observed factors of speed-up appears to be the number of species in the model, with more acceleration for larger models.
+However, the performance trends fluctuate based on model: for example, the DME-propane model at 122 species has average speed-ups of 13.5 and 6.55 for the constant-pressure and constant-volume problems, respectively.
 The Jet-A model at 201 species has average speed-ups of 5.23 and 3.84.
-The butane model has 230 species, similar to the number of species in the Jet-A model, but has average speed-ups of 12.1 and 20.3. 
-This deviation in performance with the Jet-A model suggests that there is more to performance gains than strictly the number of species. 
+The butane model has 230 species, similar to the number of species in the Jet-A model, but has average speed-ups of 12.1 and 20.3.
+This deviation in performance with the Jet-A model suggests that there is more to performance gains than strictly the number of species.
 In particular, Jet-A and DME-propane models have larger percentages of pressure-dependent reactions, which reduce speedup with the constant-volume problem.
-In contrast, the butane model has lower percentages of these reaction types, and shows the opposite trend in speed-up. 
+In contrast, the butane model has lower percentages of these reaction types, and shows the opposite trend in speed-up.
 These impacts are diminished for larger models because they have lower percentages of these reactions.
-}{revTwo}
+
 
 \begin{figure}[htb]
 \centering
@@ -659,15 +659,15 @@ The performance likely depends on the number of these reaction types since these
 \end{figure}
 
 
-\revised{Figure~\ref{fig:box_whisker} shows the range of speed-up for the constant-pressure system as a function of the number of species, for all  threshold values considered. 
+Figure~\ref{fig:box_whisker} shows the range of speed-up for the constant-pressure system as a function of the number of species, for all  threshold values considered.
 The results for constant-volume are similar.
-The threshold does impact the performance of the preconditioned solver, typically by a factor of two or three, with the maximum variation in speed-up being around an order of magnitude. 
+The threshold does impact the performance of the preconditioned solver, typically by a factor of two or three, with the maximum variation in speed-up being around an order of magnitude.
 Furthermore, Figure~\ref{fig:box_whisker_iterations} shows the variation in total linear iterations as a function of model size, over all threshold values considered.
-The number of linear iterations can vary substantially with different threshold values, although all models require similar numbers of iterations.}{revOne} 
+The number of linear iterations can vary substantially with different threshold values, although all models require similar numbers of iterations.
 
-\revised{There are no definitive trends in optimal threshold based on model size or problem type. 
+There are no definitive trends in optimal threshold based on model size or problem type.
 The best and the worst thresholds for each model tend to be on opposite ends of the range of those tested, which suggests that choosing a threshold could be done effectively with a small number of tests.
-However, regardless of the threshold value chosen, adaptive preconditioning achieves substantial performance gains in most cases.}{revOne} 
+However, regardless of the threshold value chosen, adaptive preconditioning achieves substantial performance gains in most cases.
 
 \begin{figure}[htb]
 \centering
@@ -685,19 +685,19 @@ This also enables the use of sparse linear algebra operations.
 We extended on the previously demonstrated adaptive preconditioning method to consider a state vector based on moles, allowing its use in more-general application such as constant-pressure reactors.
 We tested this preconditioner on constant-pressure and constant-volume ideal-gas reactor simulations for kinetic models with a large range of species counts and over a range of threshold values.
 
-In this application, the extended preconditioning method speeds-up performance by a factor of around 2 to nearly 4000 in comparison with direct solvers, for models with numbers of species from 10 to 7171. 
-\revised{The method improves performance over using a fully analytical Jacobian matrix as preconditioner by a factor of 0.24 to 21.1.}{revTwo}
+In this application, the extended preconditioning method speeds-up performance by a factor of around 2 to nearly 4000 in comparison with direct solvers, for models with numbers of species from 10 to 7171.
+The method improves performance over using a fully analytical Jacobian matrix as preconditioner by a factor of 0.24 to 21.1.
 
 The potentially substantial performance gains of the solver strongly depend on the total number of species and the number of falloff\slash third-body reactions in the kinetic model.
 These interactions directly influence the number of linear iterations required by the solver, which drives performance benefits.
 
-\revised{Using a threshold to eliminate small Jacobian matrix elements improves performance by increasing Jacobian matrix sparsity.
-However, there is no clear trend in optimal threshold, which makes determining appropriate values challenging. 
+Using a threshold to eliminate small Jacobian matrix elements improves performance by increasing Jacobian matrix sparsity.
+However, there is no clear trend in optimal threshold, which makes determining appropriate values challenging.
 Fortunately, the adaptive preconditioner offers substantial performance gains regardless of the specific threshold.
-At most, the theshold value varies speedup by an order of magnitude, but typically by a factor of two or three.}{revOne}
+At most, the theshold value varies speedup by an order of magnitude, but typically by a factor of two or three.
 
-Future work will explore \revised{the impact of threshold more thoroughly and}{revOne} how to balance sparsity with better-capturing third-body and pressure-dependent reactions in the semi-analytical Jacobian formulation.
-\revised{In addition, we will investigate the specific causes for the performance improvement over using the fully analytical Jacobian matrix as preconditioner.}{revOne}
+Future work will explore the impact of threshold more thoroughly and how to balance sparsity with better-capturing third-body and pressure-dependent reactions in the semi-analytical Jacobian formulation.
+In addition, we will investigate the specific causes for the performance improvement over using the fully analytical Jacobian matrix as preconditioner.
 In addition, we will extend this method to support reactors with surface reactions and networks of reactors.
 
 %\sectionOne{Acknowledgements \& References}
