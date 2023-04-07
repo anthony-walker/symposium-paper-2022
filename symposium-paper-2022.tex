@@ -184,47 +184,51 @@
 %\newcommand{\former}[2]{\textcolor{#2}{\sout{#1}}}
 \newcommand{\revised}[2]{#1}  % add
 
+\newcommand{\showFrontMatter}[1]{
+    \title{\LARGE Generalized preconditioning for accelerating simulations with large kinetic models}
+
+    \author{{\large Anthony S.~Walker$^{a}$, Raymond L.~Speth$^{b}$, and Kyle E.~Niemeyer$^{a}$}\\[10pt]
+            {\footnotesize \em $^a$School of Mechanical, Industrial, and Manufacturing Engineering, Oregon State University, Corvallis, Oregon, United States}\\
+            {\footnotesize \em $^b$Department of Aeronautics and Astronautics, Massachusetts Institute of Technology, Cambridge, Massachusetts, United States}\\[-5pt]}
+    \date{}
+
+    % -------------------------------------------------------------------- %
+    % -------------------------------------------------------------------- %
+    % -------------------------------------------------------------------- %
+
+    \small
+    \baselineskip 10pt
+
+    % -------------------------------------------------------------------- %
+    % -------------------------------------------------------------------- %
+    % -------------------------------------------------------------------- %
+
+    \twocolumn[\begin{@twocolumnfalse}
+    \vspace{50pt}
+    \maketitle
+    \vspace{40pt}
+    \rule{\textwidth}{0.5pt}
+    \begin{abstract} % 100 to 300 words.
+    %
+    Detailed modeling of the combustion of real transportation fuels and the atmospheric reactions involving their emissions is prohibitively expensive, due to the large size and stiffness of the kinetic models.
+    Adaptive preconditioning is a method used to reduce the cost of integrating large kinetic models by forming a preconditioner based on an semi-analytical Jacobian matrix, paired with sparse linear algebra procedures.
+    In this study, we extend this preconditioning method to a more-general mole-based state vector formulation applicable to generic reactor types and combinations.
+    We tested the scheme using constant-pressure and constant-volume ideal-gas reactor simulations, showing speedup in performance from a factor of 3 up to nearly 4000 times for chemical kinetic models with 55 to 7171 species, in comparison with typical dense solvers.
+    The method also improves performance by a factor of 1.06 to 21.1, for models larger than 200 species, in comparison with a fully exact, analytical Jacobian used as the preconditioner.
+    Overall, this method improves performance by up to three orders of magnitude for large kinetic models, and offers benefits for models with more than 100 species.
+    \end{abstract}
+    \vspace{10pt}
+    \parbox{1.0\textwidth}{\footnotesize {\em Keywords:}
+    Chemical kinetics; Implicit integrators; Sparse matrix; Preconditioner; Ordinary diﬀerential equations}
+    \rule{\textwidth}{0.5pt}
+    \vspace{10pt}
+    \end{@twocolumnfalse}]
+    \clearpage
+}
+
 \begin{document}
 
-\title{\LARGE Generalized preconditioning for accelerating simulations with large kinetic models}
-
-\author{{\large Anthony S.~Walker$^{a}$, Raymond L.~Speth$^{b}$, and Kyle E.~Niemeyer$^{a}$}\\[10pt]
-        {\footnotesize \em $^a$School of Mechanical, Industrial, and Manufacturing Engineering, Oregon State University, Corvallis, Oregon, United States}\\
-        {\footnotesize \em $^b$Department of Aeronautics and Astronautics, Massachusetts Institute of Technology, Cambridge, Massachusetts, United States}\\[-5pt]}
-\date{}
-
-% -------------------------------------------------------------------- %
-% -------------------------------------------------------------------- %
-% -------------------------------------------------------------------- %
-
-\small
-\baselineskip 10pt
-
-% -------------------------------------------------------------------- %
-% -------------------------------------------------------------------- %
-% -------------------------------------------------------------------- %
-
-\twocolumn[\begin{@twocolumnfalse}
-\vspace{50pt}
-\maketitle
-\vspace{40pt}
-\rule{\textwidth}{0.5pt}
-\begin{abstract} % 100 to 300 words.
-%
-Detailed modeling of the combustion of real transportation fuels and the atmospheric reactions involving their emissions is prohibitively expensive, due to the large size and stiffness of the kinetic models.
-Adaptive preconditioning is a method used to reduce the cost of integrating large kinetic models by forming a preconditioner based on an semi-analytical Jacobian matrix, paired with sparse linear algebra procedures.
-In this study, we extend this preconditioning method to a more-general mole-based state vector formulation applicable to generic reactor types and combinations.
-We tested the scheme using constant-pressure and constant-volume ideal-gas reactor simulations, showing speedup in performance from a factor of 3 up to nearly 4000 times for chemical kinetic models with 55 to 7171 species, in comparison with typical dense solvers.
-The method also improves performance by a factor of 1.06 to 21.1, for models larger than 200 species, in comparison with a fully exact, analytical Jacobian used as the preconditioner.
-Overall, this method improves performance by up to three orders of magnitude for large kinetic models, and offers benefits for models with more than 100 species.
-\end{abstract}
-\vspace{10pt}
-\parbox{1.0\textwidth}{\footnotesize {\em Keywords:}
-Chemical kinetics; Implicit integrators; Sparse matrix; Preconditioner; Ordinary diﬀerential equations}
-\rule{\textwidth}{0.5pt}
-\vspace{10pt}
-\end{@twocolumnfalse}]
-
+\showFrontMatter{}
 % -------------------------------------------------------------------- %
 % -------------------------------------------------------------------- %
 % -------------------------------------------------------------------- %
@@ -232,8 +236,6 @@ Chemical kinetics; Implicit integrators; Sparse matrix; Preconditioner; Ordinary
 % This is for usage in a larger document and does not impact this document when
 % compiled alone
 \chapter{Generalized preconditioning for accelerating simulations with large kinetic models}
-
-\clearpage
 
 \sectionOne{Introduction}
 % Paragraph about how our society relates to combustion
